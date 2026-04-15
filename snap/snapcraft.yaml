@@ -11,6 +11,8 @@ confinement: classic
 apps:
   cargo-creusot:
     command: bin/cargo-creusot
+    aliases:
+      - cargo-creusot
     environment:
       PATH: $SNAP/bin:$PATH
 
