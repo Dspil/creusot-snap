@@ -17,7 +17,9 @@ apps:
       PATH: $SNAP/share/creusot/bin:$SNAP/bin:$PATH
       XDG_DATA_HOME: $SNAP/share
       CREUSOT_DATA_HOME: $SNAP/share/creusot
-
+      WHY3LIB: $SNAP/opam/5.3.0/lib/why3
+      WHY3DATA: $SNAP/opam/5.3.0/share/why3
+      WHY3CONFIG: $SNAP/share/creusot/why3.conf
 
 parts:
   z3:
@@ -61,8 +63,8 @@ parts:
       - curl
     override-build: |
       mkdir -p $CRAFT_PART_INSTALL/share/creusot/bin
-      curl -L "https://github.com/OCamlPro/alt-ergo/releases/download/v2.6.2/alt-ergo-v2.6.2-x86_64-linux-musl" -o $CRAFT_PART_INSTALL/share/creusot/bin/altergo
-      chmod +x $CRAFT_PART_INSTALL/share/creusot/bin/altergo
+      curl -L "https://github.com/OCamlPro/alt-ergo/releases/download/v2.6.2/alt-ergo-v2.6.2-x86_64-linux-musl" -o $CRAFT_PART_INSTALL/share/creusot/bin/alt-ergo
+      chmod +x $CRAFT_PART_INSTALL/share/creusot/bin/alt-ergo
 
   opam:
     plugin: nil
@@ -117,18 +119,20 @@ parts:
       cp $OPAMROOT/5.3.0/bin/why3* $CRAFT_PART_INSTALL/bin/
 
       rustup default stable
+      sed -i 's|env!("CARGO_MANIFEST_DIR")|"/snap/creusot/current/creusot/cargo-creusot"|g' cargo-creusot/src/new.rs
       craftctl default
 
       cp target/release/cargo-creusot $CRAFT_PART_INSTALL/bin/
       cp target/release/creusot-rustc $CRAFT_PART_INSTALL/bin/
 
       mkdir -p $CRAFT_PART_INSTALL/share/creusot/bin
-      mkdir -p $CRAFT_PART_INSTALL/share/creusot/why3find/packages/creusot/creusot
+      mkdir -p $CRAFT_PART_INSTALL/share/creusot/share/why3find/packages/creusot/creusot
 
       cargo run --bin prelude-generator
-      cp target/creusot/packages/creusot/creusot/* $CRAFT_PART_INSTALL/share/creusot/why3find/packages/creusot/creusot/
+      cp target/creusot/packages/creusot/creusot/* $CRAFT_PART_INSTALL/share/creusot/share/why3find/packages/creusot/creusot/
 
       cp why3find.json $CRAFT_PART_INSTALL/share/creusot/why3find.json
+      cp creusot-deps.opam $CRAFT_PART_INSTALL/share/creusot/creusot-deps.opam
       cp $OPAMROOT/5.3.0/bin/why3* $CRAFT_PART_INSTALL/share/creusot/bin/
 
       cp -r $CRAFT_PART_SRC $CRAFT_PART_INSTALL/creusot
