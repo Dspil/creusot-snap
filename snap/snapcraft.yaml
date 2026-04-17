@@ -16,6 +16,7 @@ apps:
     environment:
       PATH: $SNAP/share/creusot/bin:$SNAP/bin:$PATH
       XDG_DATA_HOME: $SNAP/share
+      CREUSOT_DATA_HOME: $SNAP/share/creusot
 
 
 parts:
