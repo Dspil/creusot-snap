@@ -88,7 +88,7 @@ parts:
     plugin: rust
     source: https://github.com/creusot-rs/creusot.git
     source-type: git
-    source-tag: v0.10.0
+    source-tag: v0.10.0+why3find-dep
     build-packages:
       - make
       - gcc
