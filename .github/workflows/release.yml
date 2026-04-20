@@ -3,7 +3,7 @@ name: Build and Release Snap
 on:
   push:
     branches:
-      - main
+      - master
       - stable
   release:
     types: [published]
