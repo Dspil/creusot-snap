@@ -99,7 +99,10 @@ parts:
 
       mkdir -p $CRAFT_PART_INSTALL/bin
 
-      export OPAMROOT=$CRAFT_PART_INSTALL/opam
+      export BUILD_DIR=/snap/creusot/current
+      mkdir -p $BUILD_DIR
+
+      export OPAMROOT=$BUILD_DIR/opam
       export OPAM_DISABLE_SANDBOXING=1
       export OPAMROOTISOK=1
       export OPAMYES=1
@@ -115,31 +118,33 @@ parts:
 
       opam install . --deps-only --confirm-level=unsafe-yes
 
-      mkdir -p $CRAFT_PART_INSTALL/bin
-      cp $OPAMROOT/5.3.0/bin/why3* $CRAFT_PART_INSTALL/bin/
+      mkdir -p $BUILD_DIR/bin
+      cp $OPAMROOT/5.3.0/bin/why3* $BUILD_DIR/bin/
 
       rustup default stable
       sed -i 's|env!("CARGO_MANIFEST_DIR")|"/snap/creusot/current/creusot/cargo-creusot"|g' cargo-creusot/src/new.rs
       craftctl default
 
-      cp target/release/cargo-creusot $CRAFT_PART_INSTALL/bin/
-      cp target/release/creusot-rustc $CRAFT_PART_INSTALL/bin/
+      cp target/release/cargo-creusot $BUILD_DIR/bin/
+      cp target/release/creusot-rustc $BUILD_DIR/bin/
 
-      mkdir -p $CRAFT_PART_INSTALL/share/creusot/bin
-      mkdir -p $CRAFT_PART_INSTALL/share/creusot/share/why3find/packages/creusot/creusot
+      mkdir -p $BUILD_DIR/share/creusot/bin
+      mkdir -p $BUILD_DIR/share/creusot/share/why3find/packages/creusot/creusot
 
       cargo run --bin prelude-generator
-      cp target/creusot/packages/creusot/creusot/* $CRAFT_PART_INSTALL/share/creusot/share/why3find/packages/creusot/creusot/
+      cp target/creusot/packages/creusot/creusot/* $BUILD_DIR/share/creusot/share/why3find/packages/creusot/creusot/
 
-      cp why3find.json $CRAFT_PART_INSTALL/share/creusot/why3find.json
-      cp creusot-deps.opam $CRAFT_PART_INSTALL/share/creusot/creusot-deps.opam
-      cp $OPAMROOT/5.3.0/bin/why3* $CRAFT_PART_INSTALL/share/creusot/bin/
+      cp why3find.json $BUILD_DIR/share/creusot/why3find.json
+      cp creusot-deps.opam $BUILD_DIR/share/creusot/creusot-deps.opam
+      cp $OPAMROOT/5.3.0/bin/why3* $BUILD_DIR/share/creusot/bin/
 
-      cp -r $CRAFT_PART_SRC $CRAFT_PART_INSTALL/creusot
+      cp -r $CRAFT_PART_SRC $BUILD_DIR/creusot
 
       rm -rf target/
 
       rm -rf $OPAMROOT/download-cache
       rm -rf $OPAMROOT/repo/default/archives/*
+
+      cp -r $BUILD_DIR/* $CRAFT_PART_INSTALL/
 
 
