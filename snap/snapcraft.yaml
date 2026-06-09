@@ -29,7 +29,7 @@ parts:
       - unzip
     override-build: |
       mkdir -p $CRAFT_PART_INSTALL/share/creusot/bin
-      curl -L "https://github.com/Z3Prover/z3/releases/download/z3-4.15.3/z3-4.15.3-x64-glibc-2.39.zip" -o z3.zip
+      curl -fL --retry 3 --retry-delay 5 "https://github.com/Z3Prover/z3/releases/download/z3-4.15.3/z3-4.15.3-x64-glibc-2.39.zip" -o z3.zip
       unzip z3.zip -d z3_ext
       cp z3_ext/*/bin/z3 $CRAFT_PART_INSTALL/share/creusot/bin/
 
@@ -42,7 +42,7 @@ parts:
       - unzip
     override-build: |
       mkdir -p $CRAFT_PART_INSTALL/share/creusot/bin
-      curl -L "https://github.com/cvc5/cvc5/releases/download/cvc5-1.3.1/cvc5-Linux-x86_64-static-gpl.zip" -o cvc5.zip
+      curl -fL --retry 3 --retry-delay 5 "https://github.com/cvc5/cvc5/releases/download/cvc5-1.3.1/cvc5-Linux-x86_64-static-gpl.zip" -o cvc5.zip
       unzip cvc5.zip -d cvc5_ext
       cp cvc5_ext/*/bin/cvc5 $CRAFT_PART_INSTALL/share/creusot/bin/
 
@@ -54,7 +54,7 @@ parts:
       - curl
     override-build: |
       mkdir -p $CRAFT_PART_INSTALL/share/creusot/bin
-      curl -L "https://github.com/CVC4/CVC4-archived/releases/download/1.8/cvc4-1.8-x86_64-linux-opt" -o $CRAFT_PART_INSTALL/share/creusot/bin/cvc4
+      curl -fL --retry 3 --retry-delay 5 "https://github.com/CVC4/CVC4-archived/releases/download/1.8/cvc4-1.8-x86_64-linux-opt" -o $CRAFT_PART_INSTALL/share/creusot/bin/cvc4
       chmod +x $CRAFT_PART_INSTALL/share/creusot/bin/cvc4
 
   altergo:
@@ -63,7 +63,7 @@ parts:
       - curl
     override-build: |
       mkdir -p $CRAFT_PART_INSTALL/share/creusot/bin
-      curl -L "https://github.com/OCamlPro/alt-ergo/releases/download/v2.6.2/alt-ergo-v2.6.2-x86_64-linux-musl" -o $CRAFT_PART_INSTALL/share/creusot/bin/alt-ergo
+      curl -fL --retry 3 --retry-delay 5 "https://github.com/OCamlPro/alt-ergo/releases/download/v2.6.2/alt-ergo-v2.6.2-x86_64-linux-musl" -o $CRAFT_PART_INSTALL/share/creusot/bin/alt-ergo
       chmod +x $CRAFT_PART_INSTALL/share/creusot/bin/alt-ergo
 
   opam:
@@ -80,7 +80,7 @@ parts:
       export OPAMCONFIRMLEVEL=unsafe-yes
       export DEBIAN_FRONTEND=noninteractive
 
-      curl -L "https://github.com/ocaml/opam/releases/download/2.2.1/opam-2.2.1-x86_64-linux" -o /usr/local/bin/opam
+      curl -fL --retry 3 --retry-delay 5 "https://github.com/ocaml/opam/releases/download/2.2.1/opam-2.2.1-x86_64-linux" -o /usr/local/bin/opam
       chmod +x /usr/local/bin/opam
   
   creusot:
