@@ -136,6 +136,7 @@ parts:
       cp target/creusot/packages/creusot/creusot/* $BUILD_DIR/share/creusot/share/why3find/packages/creusot/creusot/
 
       cp why3find.json $BUILD_DIR/share/creusot/why3find.json
+      cp creusot-install/creusot_why3.conf $BUILD_DIR/share/creusot/creusot_why3.conf
       cp creusot-deps.opam $BUILD_DIR/share/creusot/creusot-deps.opam
       cp $OPAMROOT/5.3.0/bin/why3* $BUILD_DIR/share/creusot/bin/
 
